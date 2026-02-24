@@ -36,6 +36,7 @@ The animation is powered by `requestAnimationFrame` for smooth performance.
 ---
 
 ## 📂 Project Structure
+```
 interactive-cursor-ui/
 │
 ├── index.html
@@ -43,7 +44,7 @@ interactive-cursor-ui/
 │ └── style.css
 └── js/
 └── main.js
-
+```
 
 ---
 
