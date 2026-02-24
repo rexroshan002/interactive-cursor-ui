@@ -1,34 +1,73 @@
-const mouse = { x: 0, y: 0 }
-const $cursor = document.querySelector('#cursor')
-const $logo = document.querySelector('#logo')
-const $logoMask = document.querySelector('#logoMask')
-let light = true
+document.addEventListener("DOMContentLoaded", () => {
 
-const raf = () => {
-    $cursor.style.transform = `translate(${mouse.x}px, ${mouse.y}px)`
-    const { left, top } = $logoMask.getBoundingClientRect()
-    $logoMask.style.clipPath = `circle(calc(var(--cursorSize) * 0.48) at ${mouse.x - left}px ${mouse.y - top}px)`
-    requestAnimationFrame(raf)
-}
-raf()
+    const cursor = document.querySelector("#cursor");
+    const logo = document.querySelector("#logo");
+    const logoMask = document.querySelector("#logoMask");
 
-const handleMouseMove = (e) => {
-    mouse.x = e.clientX
-    mouse.y = e.clientY
-}
-window.addEventListener('mousemove', handleMouseMove)
+    const mouse = { x: 0, y: 0 };
+    let isLight = true;
 
-const handleClick = () => {
-    light = !light
-    document.body.style.setProperty('--textColor', light ? 'black' : 'white')
-    document.body.style.setProperty('--bgColor', light ? 'white' : 'black')
-    $logo.innerHTML = light ? 'LIGHT' : 'DARK'
-    $logoMask.innerHTML = light ? 'DARK' : 'LIGHT'
-}
-$logo.addEventListener('click', handleClick)
+    /* ========================= */
+    /* Animation Loop */
+    /* ========================= */
 
-const handleMouseHover = (e) => {
-    document.body.style.setProperty('--cursorSize', e.type === 'mouseenter' ? '12vw' : '6vw')
-}
-$logo.addEventListener('mouseenter', handleMouseHover)
-$logo.addEventListener('mouseleave', handleMouseHover)
+    const animate = () => {
+        cursor.style.transform = `translate(${mouse.x}px, ${mouse.y}px)`;
+
+        const rect = logoMask.getBoundingClientRect();
+        logoMask.style.clipPath = `circle(calc(var(--cursorSize) * 0.48) at 
+            ${mouse.x - rect.left}px 
+            ${mouse.y - rect.top}px)`;
+
+        requestAnimationFrame(animate);
+    };
+
+    animate();
+
+    /* ========================= */
+    /* Mouse Move */
+    /* ========================= */
+
+    window.addEventListener("mousemove", (e) => {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+    });
+
+    /* ========================= */
+    /* Theme Toggle */
+    /* ========================= */
+
+    const toggleTheme = () => {
+        isLight = !isLight;
+
+        document.body.style.setProperty(
+            "--textColor",
+            isLight ? "black" : "white"
+        );
+
+        document.body.style.setProperty(
+            "--bgColor",
+            isLight ? "white" : "black"
+        );
+
+        logo.textContent = isLight ? "LIGHT" : "DARK";
+        logoMask.textContent = isLight ? "DARK" : "LIGHT";
+    };
+
+    logo.addEventListener("click", toggleTheme);
+
+    /* ========================= */
+    /* Cursor Hover Effect */
+    /* ========================= */
+
+    const handleHover = (e) => {
+        document.body.style.setProperty(
+            "--cursorSize",
+            e.type === "mouseenter" ? "12vw" : "6vw"
+        );
+    };
+
+    logo.addEventListener("mouseenter", handleHover);
+    logo.addEventListener("mouseleave", handleHover);
+
+});

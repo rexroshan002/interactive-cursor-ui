@@ -1,13 +1,29 @@
-@import url(https://db.onlinewebfonts.com/c/0be010a98aa1f041ab4952d0f55249f1?family=DINTBold);
+/* ============================= */
+/* Global Variables */
+/* ============================= */
 
-body {
-    font-family: "DINTBold";
+:root {
     --cursorSize: 6vw;
     --textColor: black;
     --bgColor: white;
+}
+
+/* ============================= */
+/* Base Styles */
+/* ============================= */
+
+body {
+    font-family: "DINTBold", sans-serif;
     color: var(--textColor);
     background: var(--bgColor);
+    margin: 0;
+    overflow: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
 }
+
+/* ============================= */
+/* Header */
+/* ============================= */
 
 header {
     position: relative;
@@ -20,7 +36,10 @@ header {
 header span {
     display: inline-block;
     padding: 1vw;
+    cursor: pointer;
 }
+
+/* Mask Text */
 
 #logoMask {
     position: absolute;
@@ -28,20 +47,27 @@ header span {
     left: 0;
     color: var(--bgColor);
     pointer-events: none;
-    transition: clip-path 0.2s ease-out;
+    transition: clip-path 0.15s ease-out;
 }
 
+/* ============================= */
+/* Custom Cursor */
+/* ============================= */
+
 #cursor {
-    --margin: calc(var(--cursorSize) * -0.5);
-    border-radius: 50%;
-    background: var(--textColor);
     position: fixed;
-    top: var(--margin);
-    left: var(--margin);
-    z-index: 100;
+    top: 0;
+    left: 0;
     width: var(--cursorSize);
     height: var(--cursorSize);
     border-radius: 50%;
-    transition: transform 0.2s ease-out, width 0.2s ease-out,
-        height 0.2s ease-out, top 0.2s ease-out, left 0.2s ease-out;
+    background: var(--textColor);
+    pointer-events: none;
+    z-index: 100;
+
+    transform: translate(-50%, -50%);
+    transition: 
+        width 0.2s ease,
+        height 0.2s ease,
+        background 0.3s ease;
 }
